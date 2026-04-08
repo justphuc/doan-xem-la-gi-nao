@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kết quả 💖</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff0f3;
+      padding: 30px;
+      color: #333;
+    }
+    h1 { color: #d32f2f; text-align: center; }
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .card h3 { margin: 0 0 10px; color: #d32f2f; }
+    .tag {
+      display: inline-block;
+      background: #fce4ec;
+      color: #c62828;
+      border-radius: 20px;
+      padding: 4px 12px;
+      margin: 4px;
+      font-size: 0.9em;
+    }
+    .time { font-size: 0.8em; color: #888; margin-bottom: 8px; }
+    #loading { text-align: center; font-size: 1.2em; color: #d32f2f; }
+    #empty { text-align: center; color: #888; margin-top: 50px; }
+  </style>
+</head>
+<body>
+  <h1>💖 Câu trả lời của em</h1>
+  <div id="loading">Đang tải dữ liệu...</div>
+  <div id="results"></div>
+  <div id="empty" style="display:none">Chưa có dữ liệu nào 🥺</div>
+
+  <script src="db.js"></script>
+  <script>
+    async function loadResults() {
+      try {
+        const res = await fetch(SCRIPT_URL);
+        const data = await res.json();
+        document.getElementById("loading").style.display = "none";
+
+        if (!data.length) {
+          document.getElementById("empty").style.display = "block";
+          return;
+        }
+
+        const container = document.getElementById("results");
+        data.reverse().forEach(row => {
+          const card = document.createElement("div");
+          card.className = "card";
+
+          const tags = (label, val) => val
+            ? `<p><b>${label}:</b><br>${val.split(", ").map(v => `<span class="tag">${v}</span>`).join("")}</p>`
+            : "";
+
+          card.innerHTML = `
+            <h3>📅 Ngày hẹn: ${row["Ngày hẹn"] || "Chưa chọn"}</h3>
+            <div class="time">⏰ Gửi lúc: ${row["Thời gian"]}</div>
+            ${tags("🍜 Món ăn", row["Món ăn"])}
+            ${tags("🍮 Tráng miệng", row["Tráng miệng"])}
+            ${tags("🎡 Hoạt động", row["Hoạt động"])}
+          `;
+          container.appendChild(card);
+        });
+      } catch (err) {
+        document.getElementById("loading").innerText = "Lỗi tải dữ liệu. Kiểm tra lại SCRIPT_URL trong db.js";
+      }
+    }
+
+    loadResults();
+  </script>
+</body>
+</html>

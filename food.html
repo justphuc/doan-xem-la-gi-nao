@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Food Selection</title>
+    <link rel="stylesheet" href="food.css" />
+  </head>
+  <body>
+    <div id="foodquestion"><b>Em muốn ăn món gì?</b></div>
+    <div class="food-selection">
+      <div class="food-item">
+        <img src="burgers.jpeg" alt="burgers" />
+        <label><input type="checkbox" name="food" value="Hamburger và gà rán" /> Hamburger và gà rán</label>
+      </div>
+      <div class="food-item">
+        <img src="dog.jpeg" alt="dog" />
+        <label><input type="checkbox" name="food" value="Chúc chích" /> Chúc chích</label>
+      </div>
+      <div class="food-item">
+        <img src="koreanfood.jpeg" alt="koreanfood" />
+        <label><input type="checkbox" name="food" value="Đồ Hàn quốc" /> Đồ Hàn quốc</label>
+      </div>
+      <div class="food-item">
+        <img src="pasta.jpeg" alt="pasta" />
+        <label><input type="checkbox" name="food" value="Mì ý" /> Mì ý</label>
+      </div>
+      <div class="food-item">
+        <img src="pizza.jpeg" alt="pizza" />
+        <label><input type="checkbox" name="food" value="Pizza" /> Pizza</label>
+      </div>
+      <div class="food-item">
+        <img src="salad.jpeg" alt="salad" />
+        <label><input type="checkbox" name="food" value="Salad" /> Salad</label>
+      </div>
+      <div class="food-item">
+        <img src="steak.jpeg" alt="steak" />
+        <label><input type="checkbox" name="food" value="Bít tết" /> Bít tết</label>
+      </div>
+      <div class="food-item">
+        <img src="sushi.jpeg" alt="sushi" />
+        <label><input type="checkbox" name="food" value="Sushi" /> Sushi</label>
+      </div>
+    </div>
+    <button class="button" onclick="goNext()">Tiếp UWU</button>
+    <script src="db.js"></script>
+    <script>
+      function goNext() {
+        const checked = [...document.querySelectorAll('input[name="food"]:checked')].map(c => c.value);
+        DB.save("food", checked);
+        location.href = "dessert.html";
+      }
+    </script>
+  </body>
+</html>
