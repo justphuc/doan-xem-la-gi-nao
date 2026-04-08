@@ -1,5 +1,5 @@
 // ⚠️ Paste URL từ Google Apps Script vào đây
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzvOYUfKyEF3w1QB0hKRsZhgUAAtUpedSiwkJADdGcly9gsKjr61AdlWPPJDQs5aVm0mw/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwaJtqPDcWzMRjvubXbzcrHrfIdE93HaWylL3TqO-YQBfh_MPU4TOz234RjxURpyLqFvQ/exec";
 
 const DB = {
   save(key, value) {
