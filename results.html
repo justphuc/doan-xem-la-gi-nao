@@ -31,20 +31,21 @@
     }
     .time { font-size: 0.8em; color: #888; margin-bottom: 8px; }
     #loading { text-align: center; font-size: 1.2em; color: #d32f2f; }
-    #empty { text-align: center; color: #888; margin-top: 50px; }
+    #empty { text-align: center; color: #888; margin-top: 50px; display: none; }
   </style>
 </head>
 <body>
   <h1>💖 Câu trả lời của em</h1>
   <div id="loading">Đang tải dữ liệu...</div>
   <div id="results"></div>
-  <div id="empty" style="display:none">Chưa có dữ liệu nào 🥺</div>
+  <div id="empty">Chưa có dữ liệu nào 🥺</div>
 
-  <script src="db.js"></script>
   <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzLOfvsMHYT3Nerh2sKWm6Ky0Xq6o0lLL9z9esFbAbhVzcdHowJNiqSkfRWih_Oslx8Ow/exec";
+
     async function loadResults() {
       try {
-        const res = await fetch(SCRIPT_URL);
+        const res = await fetch(SCRIPT_URL, { mode: "cors" });
         const data = await res.json();
         document.getElementById("loading").style.display = "none";
 
@@ -57,11 +58,9 @@
         data.reverse().forEach(row => {
           const card = document.createElement("div");
           card.className = "card";
-
           const tags = (label, val) => val
             ? `<p><b>${label}:</b><br>${val.split(", ").map(v => `<span class="tag">${v}</span>`).join("")}</p>`
             : "";
-
           card.innerHTML = `
             <h3>📅 Ngày hẹn: ${row["Ngày hẹn"] || "Chưa chọn"}</h3>
             <div class="time">⏰ Gửi lúc: ${row["Thời gian"]}</div>
@@ -72,7 +71,7 @@
           container.appendChild(card);
         });
       } catch (err) {
-        document.getElementById("loading").innerText = "Lỗi tải dữ liệu. Kiểm tra lại SCRIPT_URL trong db.js";
+        document.getElementById("loading").innerText = "Lỗi: " + err.message;
       }
     }
 
